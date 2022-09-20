@@ -1,5 +1,5 @@
-.config
-.jft
-.jft-slash
-.log
-.sub
+jft.py
+log.py
+config.py
+jft-slash.py
+sub.py
