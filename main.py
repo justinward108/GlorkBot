@@ -50,13 +50,9 @@ async def on_start():
 		seconds_left = int(seconds.total_seconds())
 	if seconds.total_seconds() < 0.0:
 		seconds_left = int(abs((t2-t1).total_seconds()))
-	print(seconds_left)
 	await asyncio.sleep(seconds_left)
 	await _my_task()
-	my_task.start()
-
-@create_task(IntervalTrigger(86400))
-async def my_task():	
-	await _my_task()
+	task = create_task(IntervalTrigger(86400))(_my_task)
+	task.start()
 
 client.start()
