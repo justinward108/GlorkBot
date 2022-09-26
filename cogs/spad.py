@@ -31,6 +31,12 @@ class spad(interactions.Extension):
 		chunklength = 1900
 		chunks = [extracted_page[i:i+chunklength] for i in range (0, len(extracted_page), chunklength)]
 		for chunk in chunks:
+			for i in range(0, len(chunk)):
+				if chunk[i] == '\n':
+					if chunk[i-1] == ' ':
+						if chunk[i-2] == '.' or chunk[i-2] == '"' or chunk[i-2] == '!' or chunk[i-2] == ' ':
+							chunk = chunk[:i] + '\n' + chunk[i:]
+				
 			await ctx.send('```'+chunk+'```')
 def setup(client):
 	spad(client)
