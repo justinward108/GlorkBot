@@ -70,6 +70,8 @@ class logging(interactions.Extension):
 
 	@interactions.extension_listener
 	async def on_message_update(self, before, after):
+		if before == None:
+			return
 		if before.content != after.content:
 			if before.author.bot:
 				return
@@ -80,10 +82,7 @@ class logging(interactions.Extension):
 			channel = await interactions.get(config.bot, interactions.Channel, object_id=channel_id[str(before.guild_id)])
 			edited_message_channel = await interactions.get(config.bot, interactions.Channel, object_id = str(before.channel_id))
 			embed=interactions.Embed(title='Message sent by '+str(before.author)+'#'+str(before.author.discriminator)+' edited in '+'#'+str(edited_message_channel), color = 0x0a66f0)
-			if before == None:
-				embed.add_field(name='Before:', value="Old meessage cant be fetched", inline=False)
-			else:
-				embed.add_field(name='Before:', value=before.content, inline=False)
+			embed.add_field(name='Before:', value=before.content, inline=False)
 			embed.add_field(name="After:", value=after.content, inline=False)
 			embed.timestamp = after.edited_timestamp
 			embed.set_footer(text='\u200b')
