@@ -16,9 +16,11 @@ class spad(interactions.Extension):
 		options=[
 			interactions.Option(
 			name='page',
-			description='enter page no. of document',
+			description='enter page no. of pdf (not book)',
 			type=interactions.OptionType.INTEGER,
 			required=True,
+			min_value = 0,
+			max_value = 392,
 			),
 		],
 	)
