@@ -55,4 +55,34 @@ async def on_start():
 	task = create_task(IntervalTrigger(86400))(_my_task)
 	task.start()
 
+@client.command(
+	name='load_ext',
+    options = [
+        interactions.Option(
+            name="package",
+            description="What you want to say",
+            type=interactions.OptionType.STRING,
+            required=True,
+        ),
+    ],
+)
+async def load(ctx: interactions.CommandContext, package: str):
+	client.load(f'cogs.{package}')
+	await ctx.send('Extension loaded')
+
+@client.command(
+	name='unload_ext',
+    options = [
+        interactions.Option(
+            name="package",
+            description="What you want to say",
+            type=interactions.OptionType.STRING,
+            required=True,
+        ),
+    ],
+)
+async def unload(ctx: interactions.CommandContext, package: str):
+	client.remove(f'cogs.{package}')
+	await ctx.send("Extension unloaded")
+	
 client.start()
