@@ -70,11 +70,11 @@ class logging(interactions.Extension):
 	async def on_message_update(self, before, after):
 		if before == None:
 			return
+		if str(before.guild_id) not in self.channel_id.keys():
+			return
+		if before.author.bot:
+			return
 		if before.content != after.content:
-			if before.author.bot:
-				return
-				if str(before.guild_id) not in self.channel_id.keys():
-					return
 			channel = await interactions.get(config.bot, interactions.Channel, object_id=self.channel_id[str(before.guild_id)])
 			edited_message_channel = await interactions.get(config.bot, interactions.Channel, object_id = str(before.channel_id))
 			embed=interactions.Embed(title='Message sent by '+str(before.author)+'#'+str(before.author.discriminator)+' edited in '+'#'+str(edited_message_channel), color = 0x0a66f0)
