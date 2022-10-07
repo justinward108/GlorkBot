@@ -4,7 +4,7 @@ import config
 from interactions.ext.tasks import IntervalTrigger, create_task
 from datetime import datetime
 import asyncio
-import requests
+import aiohttp
 from bs4 import BeautifulSoup
 
 client = config.bot
@@ -23,15 +23,17 @@ async def on_ready():
     print('------')
 
 async def _my_task():
-	r = requests.get(url)
-	s = BeautifulSoup(r.text, 'html.parser')
-	text = "```"
-	for tag in s.find_all('tr'):
-		text += tag.text
-		text += '\n'
-	text += "```"
-	channel = await interactions.get(config.bot, interactions.Channel, object_id='770777229000572959')
-	await channel.send(text)
+	async with aiohttp.ClientSession() as session:
+		async with session.get(url) as response:
+			r = await response.text()
+			s = BeautifulSoup(r, 'html.parser')
+			text = "```"
+			for tag in s.find_all('tr'):
+				text += tag.text
+				text += '\n'
+			text += "```"
+			channel = await interactions.get(config.bot, interactions.Channel, object_id='770777229000572959')
+			await channel.send(text)
 
 @client.event
 async def on_start():
