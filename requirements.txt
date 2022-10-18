@@ -1,7 +1,7 @@
 pymongo==4.2.0
 beautifulsoup4==4.11.1
-discord-py-interactions==4.3.1
-requests==2.28.1
+discord-py-interactions==4.3.4
 dnspython==2.2.1
 interactions-tasks==1.0.0
-pdfplumber==0.7.4
+PyMuPDF==1.20.2
+aiohttp==3.8.1
