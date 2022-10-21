@@ -1,7 +1,6 @@
 import fitz
 import interactions
 import datetime
-import asyncio
 
 class spad(interactions.Extension):
 	def __init__(self, client: interactions.Client):
