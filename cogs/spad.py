@@ -1,6 +1,5 @@
 import fitz
 import interactions
-import config
 import datetime
 import asyncio
 
@@ -79,8 +78,7 @@ class spad(interactions.Extension):
 	)
 	async def ext_command(self, ctx:interactions.CommandContext, page: int = None):
 		await ctx.defer(ephemeral=False)
-		loop = asyncio.get_running_loop()
-		chunk = await loop.run_in_executor(None, self.pdf_process, page)
+		chunk = await self.client._loop.run_in_executor(None, self.pdf_process, page)
 		for i in range(0,len(chunk)):
 			await ctx.send('```'+chunk[i]+'```')
 
