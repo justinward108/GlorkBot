@@ -1,6 +1,5 @@
 import interactions
 import aiohttp
-import asyncio
 from bs4 import BeautifulSoup
 
 url = 'https://www.jftna.org/jft/'
