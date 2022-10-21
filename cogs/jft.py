@@ -25,14 +25,13 @@ class jft(interactions.Extension):
 
     
     async def ext_command(self, ctx: interactions.CommandContext):
-        loop = asyncio.get_running_loop()
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 try:
                     r = await response.text()
                 except UnicodeDecodeError:
                     r = await response.text('ISO-8859-1')
-                text = await loop.run_in_executor(None, self.scrape, r)
+                text = await self.client._loop.run_in_executor(None, self.scrape, r)
                 await ctx.send(text)
 
 
