@@ -28,7 +28,10 @@ class jft(interactions.Extension):
         loop = asyncio.get_running_loop()
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
-                r = await response.text()
+                try:
+                    r = await response.text()
+                except UnicodeDecodeError:
+                    r = await response.text('ISO-8859-1')
                 text = await loop.run_in_executor(None, self.scrape, r)
                 await ctx.send(text)
 
