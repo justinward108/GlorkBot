@@ -61,7 +61,7 @@ class report(Extension):
         try:            
             punk = await get(self.client, Member, object_id=disc_id, parent_id=770770772460568587)
         except LibraryException as e:
-            if e.message == 'Unknown User':
+            if e.message == 'Unknown User' or e.message == 'Unknown Member':
                 await channel.send(embeds=embed)
                 await ctx.send(f"""
 {name}
@@ -70,10 +70,12 @@ class report(Extension):
 """)
                 return
             else:
-                await ctx.send("Failed")                
-        embed.set_thumbnail(url=punk.avatar_url)
-        await channel.send(embeds=embed)
-        await ctx.send(f"""
+                await ctx.send("Failed")
+                return
+        else:
+            embed.set_thumbnail(url=punk.avatar_url)
+            await channel.send(embeds=embed)
+            await ctx.send(f"""
 {name}
 {disc_id}
 {info}
